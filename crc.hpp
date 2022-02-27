@@ -12,8 +12,8 @@
  *
  */
 
-#include <stdint.h>
-#include <string>
+#include <cstdint>
+#include <string_view>
 #include <type_traits>
 #ifndef __cplusplus
 #error Do not include the hpp header in a c project!
@@ -101,10 +101,10 @@ public:
         this->update(first, last);
     }
 
-    explicit Crc(Code type, const std::string &str)
+    explicit Crc(Code type, std::string_view str)
         : Crc(type)
     {
-        this->update(reinterpret_cast<const uint8_t*>(str.data()), reinterpret_cast<const uint8_t*>(str.data()) + str.length());
+        update(str);
     }
 
     void update(uint8_t c) noexcept
@@ -165,6 +165,11 @@ public:
         for (; first != last; ++first) {
             update(*first);
         }
+    }
+
+    void update(std::string_view str)
+    {
+        this->update(str.cbegin(), str.cend());
     }
 
     void reset() noexcept
