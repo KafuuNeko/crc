@@ -94,7 +94,7 @@ public:
         this->update(input);
     }
 
-    template <class Iterator, std::enable_if_t<std::is_same_v<std::remove_cv_t<std::remove_reference_t<decltype(*(Iterator {}))>>, uint8_t>, int> = 0>
+    template <class Iterator, std::enable_if_t<std::is_same_v<std::make_unsigned_t<std::remove_cv_t<std::remove_reference_t<decltype(*(Iterator {}))>>>, uint8_t>, int> = 0>
     explicit Crc(Code type, Iterator first, Iterator last)
         : Crc(type)
     {
@@ -158,7 +158,7 @@ public:
         }
     }
 
-    template <class Iterator, std::enable_if_t<std::is_same_v<std::remove_cv_t<std::remove_reference_t<decltype(*(Iterator {}))>>, uint8_t>, int> = 0>
+    template <class Iterator, std::enable_if_t<std::is_same_v<std::make_unsigned_t<std::remove_cv_t<std::remove_reference_t<decltype(*(Iterator {}))>>>, uint8_t>, int> = 0>
     void update(Iterator first, Iterator last)
     {
         uint8_t c = 0;
